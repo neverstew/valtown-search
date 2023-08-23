@@ -44,9 +44,6 @@ const populateVals = async () => {
   }
 };
 
-// await populateVals();
-// process.exit(0);
-
 interface Val {
   id: string;
   handle: string;
