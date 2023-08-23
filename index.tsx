@@ -128,7 +128,7 @@ function Val({ val }: { val: Val }) {
           alignItems: "center",
         }}
       >
-        <a href={`http://val.town/v/${val.id}`}>
+        <a href={`http://val.town/v/${val.handle}.${val.name}`}>
           {val.handle}.{val.name}
         </a>
       </div>
