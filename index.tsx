@@ -9,6 +9,12 @@ db.run(
   "create virtual table if not exists vals using fts5(id, handle, name, code)"
 );
 
+interface Val {
+  id: string;
+  handle: string;
+  name: string;
+  code: string;
+}
 const deleteVal = db.query("delete from vals where id = ?");
 const insertVal = db.query(
   "insert into vals(id, handle, name, code) values (?, ?, ?, ?)"
@@ -43,13 +49,6 @@ const populateVals = async () => {
     populating = false;
   }
 };
-
-interface Val {
-  id: string;
-  handle: string;
-  name: string;
-  code: string;
-}
 
 function Layout({ children }: PropsWithChildren) {
   return (
