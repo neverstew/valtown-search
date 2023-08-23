@@ -19,7 +19,7 @@ const deleteVal = db.query("delete from vals where id = ?");
 const insertVal = db.query(
   "insert into vals(id, handle, name, code) values (?, ?, ?, ?)"
 );
-const searchVals = db.query<Val, string>("select * from vals where vals = ?;");
+const searchVals = db.query<Val, string>("select * from vals where vals = ? order by rank desc");
 
 let populating = false;
 let lastPopulated: Date;
