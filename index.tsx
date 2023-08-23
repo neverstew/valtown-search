@@ -156,5 +156,5 @@ const handleFetch: ServeOptions["fetch"] = async (request, server) => {
   return new Response("Not found", { status: 404 });
 };
 
-const server = Bun.serve({ fetch: handleFetch });
+const server = Bun.serve({ fetch: handleFetch, port: process.env.PORT || 3434 });
 process.on("exit", () => server.stop());
