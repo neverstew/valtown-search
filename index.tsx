@@ -4,7 +4,7 @@ import { differenceInMinutes } from "date-fns";
 import { PropsWithChildren } from "react";
 import { renderToString } from "react-dom/server";
 
-const db = new Database("./valtown.db");
+const db = new Database(process.env.DB || "./valtown.db");
 db.run(
   "create virtual table if not exists vals using fts5(id, handle, name, split_name, code)"
 );

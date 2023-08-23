@@ -16,6 +16,9 @@ primary_region = "lhr"
   min_machines_running = 0
   processes = ["app"]
 
+[env]
+  DB = "/data/valtown.db"
+
 [mounts]
   source="valtown_search_data"
-  destination="/"
+  destination="/data"
