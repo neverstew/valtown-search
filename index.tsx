@@ -6,20 +6,30 @@ import { renderToString } from "react-dom/server";
 
 const db = new Database("./valtown.db");
 db.run(
-  "create virtual table if not exists vals using fts5(id, handle, name, code)"
+  "create virtual table if not exists vals using fts5(id, handle, name, split_name, code)"
 );
 
 interface Val {
   id: string;
   handle: string;
   name: string;
+  split_name: string;
   code: string;
 }
 const deleteVal = db.query("delete from vals where id = ?");
 const insertVal = db.query(
-  "insert into vals(id, handle, name, code) values (?, ?, ?, ?)"
+  "insert into vals(id, handle, name, split_name, code) values (?, ?, ?, ?, ?)"
 );
 const searchVals = db.query<Val, string>("select * from vals where vals = ? order by rank desc");
+
+const isCamelcase = (s: string) => s.match(/[a-z0-9][A-Z]/g)
+const isSnakecase = (s: string) => s.match(/\w_\w/g);
+const isKebabcase = (s: string) => s.match(/\w-\w/g);
+const transformName = (s: string) => {
+  if (isCamelcase(s)) return s.replace(/[A-Z]/g, s => ` ${s}`)
+  if (isSnakecase(s)) return s.replace(/_/g, " ")
+  if (isKebabcase(s)) return s.replace(/-/g, " ")
+}
 
 let populating = false;
 let lastPopulated: Date;
@@ -36,7 +46,7 @@ const populateVals = async () => {
         next = links.next;
         for (const val of data) {
           deleteVal.run(val.id);
-          insertVal.run(val.id, val.author.username, val.name, val.code);
+          insertVal.run(val.id, val.author.username, val.name, transformName(val.name), val.code);
         }
         console.info(`Inserted ${data.length} vals`);
       } catch (err) {
