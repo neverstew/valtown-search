@@ -1,5 +1,10 @@
 # valtown-search
 
+Deployed at https://valtown-search.fly.dev/
+Alongside [a val that triggers the sync process every 15 minutes](https://www.val.town/v/neverstew/updateValtownSearch).
+
+## Development
+
 To install dependencies:
 
 ```bash
